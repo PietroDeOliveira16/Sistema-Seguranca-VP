@@ -1,0 +1,57 @@
+// C++ code
+//
+int distanciaCM = 0;
+
+long lerDistancia (int pinoTrigger, int pinoEcho){
+	digitalWrite(pinoTrigger,LOW);
+  	digitalWrite(pinoTrigger, HIGH);
+  	delay(10);
+	digitalWrite(pinoTrigger,LOW);	
+  	return pulseIn(pinoEcho, HIGH);
+}
+
+void setup()
+{
+  pinMode(2, OUTPUT);
+  pinMode(3, INPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);  
+  pinMode(7, OUTPUT); 
+  Serial.begin(9600);
+}
+void loop()
+{
+  distanciaCM = lerDistancia(2,3) * 0.01723;
+  
+  if(distanciaCM <= 30){
+    digitalWrite(7,HIGH);
+    digitalWrite(6,LOW);
+    digitalWrite(5,LOW);
+    tone(4,6000);
+    delay(150);
+    noTone(4);
+    delay(200);
+  }else if(distanciaCM <= 60){
+  	digitalWrite(7,LOW);
+    digitalWrite(6,HIGH);
+    digitalWrite(5,LOW);
+    tone(4,6000);
+    delay(150);             
+    noTone(4);
+    delay(800);
+  }else if(distanciaCM <= 90){
+    digitalWrite(7,LOW);
+    digitalWrite(6,LOW);
+    digitalWrite(5,HIGH);
+    tone(4,6000);
+    delay(150);
+    noTone(4);
+    delay(1500);
+  }else{
+    digitalWrite(7,LOW);
+    digitalWrite(6,LOW);
+    digitalWrite(5,LOW);
+    noTone(4);
+  }
+}
